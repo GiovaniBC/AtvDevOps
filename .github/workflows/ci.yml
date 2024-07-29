@@ -1,0 +1,25 @@
+name: Deploy HTML to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Setup Pages
+      uses: actions/configure-pages@v1
+
+    - name: Deploy to GitHub Pages
+      run: |
+        mkdir -p public
+        cp index.html public/
+        echo "<!DOCTYPE html><html><head><meta http-equiv='refresh' content='0; url=public/' /></head><body></body></html>" > index.html
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
